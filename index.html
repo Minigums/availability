@@ -1,89 +1,34 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Chuan — Availability</title>
 <style>
 
-  :root {
-    --bg: #0d0d0d;
-    --surface: #161616;
-    --border: #2a2a2a;
-    --text: #e0e0e0;
-    --muted: #6a6a6a;
-    --accent: #ffffff;
-    --available: #00ff88;
-    --busy: #ff4444;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 60px 20px;
-  }
-  .container { max-width: 720px; width: 100%; }
-  h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
-  .subtitle { color: var(--muted); font-size: 0.8rem; margin-bottom: 40px; }
-  .legend { display: flex; gap: 20px; margin-bottom: 32px; font-size: 0.7rem; color: var(--muted); }
-  .legend span { display: flex; align-items: center; gap: 6px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; }
-  .dot.available { background: var(--available); }
-  .dot.busy { background: var(--busy); }
-  .grid {
-    display: grid;
-    grid-template-columns: 50px repeat(7, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .cell {
-    background: var(--surface);
-    padding: 10px 4px;
-    text-align: center;
-    font-size: 0.65rem;
-    transition: background 0.15s;
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .cell.header {
-    background: var(--bg);
-    color: var(--muted);
-    font-weight: 600;
-    font-size: 0.6rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 10px 4px;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .cell.header .date { font-weight: 400; font-size: 0.5rem; opacity: 0.7; }
-  .cell.time-label {
-    background: var(--bg);
-    color: var(--muted);
-    font-size: 0.6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .cell.available { background: rgba(0, 255, 136, 0.08); }
-  .cell.busy { background: rgba(255, 68, 68, 0.15); }
-  .cell.empty { background: var(--surface); }
-  .timezone-note { margin-top: 24px; font-size: 0.7rem; color: var(--muted); text-align: center; }
-  .contact { margin-top: 32px; text-align: center; font-size: 0.75rem; color: var(--muted); }
-  .updated { margin-top: 8px; font-size: 0.65rem; color: var(--muted); text-align: center; }
-  @media (max-width: 600px) {
-    .grid { grid-template-columns: 40px repeat(7, 1fr); }
-    .cell { padding: 8px 2px; font-size: 0.55rem; min-height: 30px; }
-    body { padding: 30px 10px; }
-  }
+  :root{--bg:#0d0d0d;--surface:#161616;--border:#2a2a2a;--text:#e0e0e0;--muted:#6a6a6a;--accent:#fff;--available:#00ff88;--busy:#ff4444}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'SF Mono','Fira Code','JetBrains Mono',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:60px 20px}
+  .container{max-width:800px;width:100%}
+  h1{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+  .subtitle{color:var(--muted);font-size:.8rem;margin-bottom:40px}
+  .legend{display:flex;gap:20px;margin-bottom:32px;font-size:.7rem;color:var(--muted)}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:8px;height:8px;border-radius:50%}
+  .dot.available{background:var(--available)}
+  .dot.busy{background:var(--busy)}
+  .scroller{overflow-x:auto;width:100%;border:1px solid var(--border);border-radius:6px}
+  .grid{display:grid;grid-template-columns:50px repeat(7,1fr);gap:1px;background:var(--border);min-width:700px}
+  .cell{background:var(--surface);padding:6px 3px;text-align:center;font-size:.55rem;min-height:28px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+  .cell.header{background:var(--bg);color:var(--muted);font-weight:600;font-size:.55rem;letter-spacing:.05em;text-transform:uppercase;flex-direction:column;gap:2px;padding:8px 3px}
+  .cell.header .date{font-weight:400;font-size:.45rem;opacity:.7}
+  .cell.time-label{background:var(--bg);color:var(--muted);font-size:.5rem}
+  .cell.available{background:rgba(0,255,136,.06)}
+  .cell.available:hover{background:rgba(0,255,136,.15)}
+  .cell.busy{background:rgba(255,68,68,.15)}
+  .cell.empty{background:var(--surface)}
+  .timezone-note{margin-top:24px;font-size:.7rem;color:var(--muted);text-align:center}
+  .contact{margin-top:32px;text-align:center;font-size:.75rem;color:var(--muted)}
+  .updated{margin-top:8px;font-size:.65rem;color:var(--muted);text-align:center}
+  @media(max-width:600px){body{padding:30px 10px}.cell{min-height:24px;font-size:.5rem}}
 </style>
 </head>
 <body>
@@ -94,21 +39,134 @@
     <span><div class="dot available"></div> Available</span>
     <span><div class="dot busy"></div> Booked</span>
   </div>
+  <div class="scroller">
   <div class="grid">
     <div class="cell"></div>
-    <div class="cell header">Sun<span class="date">06/28</span></div>
     <div class="cell header">Mon<span class="date">06/29</span></div>
     <div class="cell header">Tue<span class="date">06/30</span></div>
     <div class="cell header">Wed<span class="date">07/01</span></div>
     <div class="cell header">Thu<span class="date">07/02</span></div>
     <div class="cell header">Fri<span class="date">07/03</span></div>
     <div class="cell header">Sat<span class="date">07/04</span></div>
-    <div class="cell time-label">14</div>
+    <div class="cell header">Sun<span class="date">07/05</span></div>
+    <div class="cell time-label">00</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">01</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">02</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">03</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">04</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">05</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">06</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">07</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">08</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
+    <div class="cell time-label">09</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
+    <div class="cell time-label">10</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">11</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">12</div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">13</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">14</div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell time-label">15</div>
@@ -117,7 +175,7 @@
     <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell busy"></div>
-    <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell time-label">16</div>
     <div class="cell busy"></div>
@@ -125,10 +183,10 @@
     <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell busy"></div>
-    <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell time-label">17</div>
-    <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
@@ -136,15 +194,15 @@
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell time-label">18</div>
-    <div class="cell busy"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell time-label">19</div>
-    <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
@@ -152,7 +210,7 @@
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell time-label">20</div>
-    <div class="cell busy"></div>
+    <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
     <div class="cell available"></div>
@@ -175,9 +233,18 @@
     <div class="cell busy"></div>
     <div class="cell busy"></div>
     <div class="cell busy"></div>
+    <div class="cell time-label">23</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
   </div>
-  <p class="timezone-note">All times in Taiwan (UTC+8)</p>
-  <p class="updated">Updated: 2026-06-28 04:02</p>
+  </div>
+  <p class="timezone-note">All times in Taiwan (UTC+8) · Mon–Sun</p>
+  <p class="updated">Updated: 2026-06-28 04:08</p>
   <p class="contact">Reach out via Discord to book a slot</p>
 </div>
 </body>
