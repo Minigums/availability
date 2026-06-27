@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chuan — Availability</title>
 <style>
+
   :root {
     --bg: #0d0d0d;
     --surface: #161616;
@@ -14,11 +13,8 @@
     --accent: #ffffff;
     --available: #00ff88;
     --busy: #ff4444;
-    --tentative: #ffaa00;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: var(--bg);
     color: var(--text);
@@ -29,232 +25,160 @@
     align-items: center;
     padding: 60px 20px;
   }
-
-  .container {
-    max-width: 720px;
-    width: 100%;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 4px;
-  }
-
-  .subtitle {
-    color: var(--muted);
-    font-size: 0.8rem;
-    margin-bottom: 40px;
-  }
-
-  .legend {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 32px;
-    font-size: 0.7rem;
-    color: var(--muted);
-  }
-
-  .legend span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
+  .container { max-width: 720px; width: 100%; }
+  h1 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); font-size: 0.8rem; margin-bottom: 40px; }
+  .legend { display: flex; gap: 20px; margin-bottom: 32px; font-size: 0.7rem; color: var(--muted); }
+  .legend span { display: flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
   .dot.available { background: var(--available); }
   .dot.busy { background: var(--busy); }
-  .dot.tentative { background: var(--tentative); }
-
   .grid {
     display: grid;
-    grid-template-columns: 60px repeat(7, 1fr);
+    grid-template-columns: 50px repeat(7, 1fr);
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
     border-radius: 6px;
     overflow: hidden;
   }
-
   .cell {
     background: var(--surface);
-    padding: 12px 6px;
+    padding: 10px 4px;
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     transition: background 0.15s;
-  }
-
-  .cell.header {
-    background: var(--bg);
-    color: var(--muted);
-    font-weight: 600;
-    font-size: 0.65rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 10px 6px;
-  }
-
-  .cell.time-label {
-    background: var(--bg);
-    color: var(--muted);
-    font-size: 0.65rem;
+    min-height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-
-  .cell.available {
-    background: rgba(0, 255, 136, 0.08);
-    cursor: pointer;
-  }
-
-  .cell.available:hover {
-    background: rgba(0, 255, 136, 0.18);
-  }
-
-  .cell.busy {
-    background: rgba(255, 68, 68, 0.06);
-  }
-
-  .cell.tentative {
-    background: rgba(255, 170, 0, 0.08);
-  }
-
-  .cell.empty {
-    background: var(--surface);
-  }
-
-  .tooltip {
-    position: fixed;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s;
-    z-index: 100;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  }
-
-  .tooltip.visible { opacity: 1; }
-
-  .timezone-note {
-    margin-top: 24px;
-    font-size: 0.7rem;
+  .cell.header {
+    background: var(--bg);
     color: var(--muted);
-    text-align: center;
+    font-weight: 600;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 10px 4px;
+    flex-direction: column;
+    gap: 2px;
   }
-
-  .contact {
-    margin-top: 32px;
-    text-align: center;
-    font-size: 0.75rem;
+  .cell.header .date { font-weight: 400; font-size: 0.5rem; opacity: 0.7; }
+  .cell.time-label {
+    background: var(--bg);
     color: var(--muted);
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-
-  .contact a {
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.15s;
-  }
-
-  .contact a:hover {
-    border-color: var(--accent);
-  }
-
+  .cell.available { background: rgba(0, 255, 136, 0.08); }
+  .cell.busy { background: rgba(255, 68, 68, 0.15); }
+  .cell.empty { background: var(--surface); }
+  .timezone-note { margin-top: 24px; font-size: 0.7rem; color: var(--muted); text-align: center; }
+  .contact { margin-top: 32px; text-align: center; font-size: 0.75rem; color: var(--muted); }
+  .updated { margin-top: 8px; font-size: 0.65rem; color: var(--muted); text-align: center; }
   @media (max-width: 600px) {
-    .grid { grid-template-columns: 50px repeat(7, 1fr); }
-    .cell { padding: 8px 3px; font-size: 0.6rem; }
+    .grid { grid-template-columns: 40px repeat(7, 1fr); }
+    .cell { padding: 8px 2px; font-size: 0.55rem; min-height: 30px; }
     body { padding: 30px 10px; }
   }
 </style>
 </head>
 <body>
-
 <div class="container">
   <h1>Chuan</h1>
-  <p class="subtitle">Available times for meetings & collaboration</p>
-
+  <p class="subtitle">Available times for meetings &amp; collaboration</p>
   <div class="legend">
     <span><div class="dot available"></div> Available</span>
     <span><div class="dot busy"></div> Booked</span>
-    <span><div class="dot tentative"></div> Tentative</span>
   </div>
-
-  <div class="grid" id="calendar"></div>
-
+  <div class="grid">
+    <div class="cell"></div>
+    <div class="cell header">Sun<span class="date">06/28</span></div>
+    <div class="cell header">Mon<span class="date">06/29</span></div>
+    <div class="cell header">Tue<span class="date">06/30</span></div>
+    <div class="cell header">Wed<span class="date">07/01</span></div>
+    <div class="cell header">Thu<span class="date">07/02</span></div>
+    <div class="cell header">Fri<span class="date">07/03</span></div>
+    <div class="cell header">Sat<span class="date">07/04</span></div>
+    <div class="cell time-label">14</div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">15</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">16</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">17</div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">18</div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">19</div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">20</div>
+    <div class="cell busy"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell available"></div>
+    <div class="cell time-label">21</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell time-label">22</div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+    <div class="cell busy"></div>
+  </div>
   <p class="timezone-note">All times in Taiwan (UTC+8)</p>
-
+  <p class="updated">Updated: 2026-06-28 04:02</p>
   <p class="contact">Reach out via Discord to book a slot</p>
 </div>
-
-<div class="tooltip" id="tooltip"></div>
-
-<script>
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const hours = [
-    '14:00', '15:00', '16:00', '17:00', '18:00', '19:00',
-    '20:00', '21:00', '22:00'
-  ];
-
-  // availability[day][hour] = 'available' | 'busy' | 'tentative'
-  // day: 0=Mon ... 6=Sun
-  const availability = {
-    0: { 5: 'available', 6: 'available', 7: 'available', 8: 'available' }, // Mon 19-22
-    1: { 5: 'available', 6: 'available', 7: 'available', 8: 'available' }, // Tue 19-22
-    2: { 5: 'available', 6: 'available', 7: 'available' }, // Wed 19-21
-    3: { 5: 'available', 6: 'available', 7: 'available', 8: 'available' }, // Thu 19-22
-    4: { 5: 'available', 6: 'available' }, // Fri 19-20
-    5: { 0: 'available', 1: 'available', 2: 'available', 3: 'available', 4: 'available', 5: 'available' }, // Sat 14-19
-    6: { 0: 'available', 1: 'available', 2: 'available', 3: 'available' }, // Sun 14-17
-  };
-
-  const grid = document.getElementById('calendar');
-  const tooltip = document.getElementById('tooltip');
-
-  // Header row
-  grid.appendChild(createCell('', 'header'));
-  days.forEach(day => grid.appendChild(createCell(day, 'header')));
-
-  hours.forEach((hour, hi) => {
-    grid.appendChild(createCell(hour, 'time-label'));
-    for (let di = 0; di < 7; di++) {
-      const status = availability[di]?.[hi] || 'empty';
-      const cell = createCell('', status);
-      if (status === 'available') {
-        cell.addEventListener('mouseenter', (e) => {
-          tooltip.textContent = `${days[di]} ${hour} — Available`;
-          tooltip.classList.add('visible');
-          positionTooltip(e);
-        });
-        cell.addEventListener('mousemove', positionTooltip);
-        cell.addEventListener('mouseleave', () => tooltip.classList.remove('visible'));
-      }
-      grid.appendChild(cell);
-    }
-  });
-
-  function createCell(text, cls) {
-    const div = document.createElement('div');
-    div.className = `cell ${cls}`;
-    div.textContent = text;
-    return div;
-  }
-
-  function positionTooltip(e) {
-    tooltip.style.left = (e.clientX + 12) + 'px';
-    tooltip.style.top = (e.clientY - 30) + 'px';
-  }
-</script>
-
 </body>
 </html>
